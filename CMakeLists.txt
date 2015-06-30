@@ -1,7 +1,7 @@
 # opencal/CMakeLists.txt
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
-project(OpenCAL-ALL)
+project(OpenCAL++-ALL)
 
 
 option(BUILD_OPENCAL_SERIAL "Build the OpenCAL serial version"                                      ON )

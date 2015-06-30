@@ -589,12 +589,12 @@ void calApplyElementaryProcess3D(struct CALModel3D* ca3D,	//!< Pointer to the ce
 
 	if (ca3D->A.cells) //Computationally active cells optimization.
 			for (n=0; n<ca3D->A.size_current; n++)
-				elementary_process(ca3D, ca3D->A.cells[n].i, ca3D->A.cells[n].j, ca3D->A.cells[n].k);
+				(*elementary_process)(ca3D, ca3D->A.cells[n].i, ca3D->A.cells[n].j, ca3D->A.cells[n].k);
 		else //Standart cicle of the transition function
 			for (i=0; i<ca3D->rows; i++)
 				for (j=0; j<ca3D->columns; j++)	
 					for (k = 0; k<ca3D->slices; k++)
-						elementary_process(ca3D, i, j, k);
+						(*elementary_process)(ca3D, i, j, k);
 }
 
 

@@ -12,6 +12,7 @@ struct life3DSubstates Q;							//the substate
 struct CALRun3D* life3Dsimulation;					//the simulartion run
 
 
+
 //------------------------------------------------------------------------------
 //					life3D transition function
 //------------------------------------------------------------------------------
@@ -38,7 +39,7 @@ Various configurations of living cells show suprisingly complex and almost lifel
 #define r3 (4)
 #define r4 (4)
 //first elementary process
-void life3DTransitionFunction(struct CALModel3D* ca, int i, int j, int k)
+/*void life3DTransitionFunction(struct CALModel3D* ca, int i, int j, int k)
 {
 
 
@@ -55,6 +56,33 @@ void life3DTransitionFunction(struct CALModel3D* ca, int i, int j, int k)
 
 	calSet3Db(ca, Q.life, i, j, k, nextState);
 }
+*/
+
+class life3DTransitionFunction : public ElementaryProcessFunctor{
+
+public:
+	life3DTransitionFunction() {
+
+	};
+
+	 void run(struct CALModel2D* model, int i, int j){
+
+	 }
+  void run(struct CALModel3D* ca, int i, int j,int k){
+		int sum = 0, n;
+		CALbyte alive = calGet3Db(ca,Q.life,i,j,k);
+		CALbyte nextState=alive;
+		for (n=0; n<ca->sizeof_X; n++)
+			sum += calGetX3Db(ca, Q.life, i, j, k, n);
+
+		if(alive && (sum < r1 || sum >r2))
+			nextState=0;
+		else if(!alive && (sum >=r3 && sum <=r4))
+			nextState=1;
+
+		calSet3Db(ca, Q.life, i, j, k, nextState);
+ }
+};
 
 //------------------------------------------------------------------------------
 //					life3D simulation functions
@@ -96,7 +124,7 @@ void life3DCADef()
 	life3Dsimulation = calRunDef3D(life3D, 1, CAL_RUN_LOOP, CAL_UPDATE_IMPLICIT);
 
 	//add transition function's elementary processes
-	calAddElementaryProcess3D(life3D, life3DTransitionFunction);
+	calAddElementaryProcess3D(life3D, new life3DTransitionFunction());
 
 	//add substates
 	Q.life = calAddSubstate3Db(life3D);

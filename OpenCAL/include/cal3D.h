@@ -13,7 +13,7 @@
 #define cal3D_h
 
 #include <calCommon.h>
-
+#include <ElementaryProcessFunctor.h>
 
 /*****************************************************************************
 						DEFINITIONS OF NEW DATA TYPES
@@ -42,6 +42,7 @@ struct CALActiveCells3D {
 };
 
 
+typedef  ElementaryProcessFunctor* CALCallbackFunc3D;
 
 /*! \brief Structure defining the 3D cellular automaton.
 */
@@ -65,14 +66,13 @@ struct CALModel3D {
 	int sizeof_pQi_array;				//!< Number of substates of type int.
 	int sizeof_pQr_array;				//!< Number of substates of type real (floating point).
 
-	void (**elementary_processes)(struct CALModel3D* ca3D, int i, int j, int k); //!< Array of function pointers to the transition function's elementary processes callback functions. Note that a substates' update must be performed after each elementary process has been applied to each cell of the cellular space (see calGlobalTransitionFunction3D).
+	CALCallbackFunc3D *elementary_processes;
 	int num_of_elementary_processes; //!< Number of function pointers to the transition functions's elementary processes callbacks.
 };
 
 /*! \brief Fake function pointer type.
 */
-typedef void (* CALCallbackFunc3D)(struct CALModel3D* ca3D, int i, int j, int k);
-
+//typedef void (* CALCallbackFunc3D)(struct CALModel3D* ca3D, int i, int j, int k);
 
 
 

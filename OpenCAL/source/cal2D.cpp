@@ -535,8 +535,8 @@ CALCallbackFunc2D* calAddElementaryProcess2D(struct CALModel2D* ca2D,	//!< Point
 											CALCallbackFunc2D elementary_process
 											 )
 {
-	void(** callbacks_temp)(struct CALModel2D* ca2D, int i, int j) = ca2D->elementary_processes;
-	void(** callbacks_new)(struct CALModel2D* ca2D, int i, int j) = (void(**)(struct CALModel2D* ca2D, int i, int j))malloc(sizeof(void (*)(struct CALModel2D* ca2D, int i, int j))*(ca2D->num_of_elementary_processes + 1));
+	CALCallbackFunc2D* callbacks_temp = ca2D->elementary_processes;
+	CALCallbackFunc2D* callbacks_new = (CALCallbackFunc2D*)malloc(sizeof(CALCallbackFunc2D)*(ca2D->num_of_elementary_processes + 1));
 	int n;
 
 	if (!callbacks_new)
@@ -656,11 +656,11 @@ void calApplyElementaryProcess2D(struct CALModel2D* ca2D,	//!< Pointer to the ce
 
 	if (ca2D->A.cells) //Computationally active cells optimization.
 		for (n=0; n<ca2D->A.size_current; n++)
-			elementary_process(ca2D, ca2D->A.cells[n].i, ca2D->A.cells[n].j);
+			(*elementary_process)(ca2D, ca2D->A.cells[n].i, ca2D->A.cells[n].j);
 	else //Standart cicle of the transition function
 		for (i=0; i<ca2D->rows; i++)
 			for (j=0; j<ca2D->columns; j++)	
-				elementary_process(ca2D, i, j);
+				(*elementary_process)(ca2D, i, j);
 }
 
 
