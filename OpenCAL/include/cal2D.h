@@ -13,7 +13,7 @@
 #define cal2D_h
 
 #include <calCommon.h>
-#include <ElementaryProcessFunctor.h>
+#include <ElementaryProcessFunctor2D.h>
 
 
 /*****************************************************************************
@@ -51,7 +51,7 @@ struct CALModel2D;
 /*! \brief Fake function pointer type.
 */
 //typedef void (* CALCallbackFunc2D)(struct CALModel2D* ca2D, int i, int j);
-typedef  ElementaryProcessFunctor* CALCallbackFunc2D;
+typedef  ElementaryProcessFunctor2D* CALCallbackFunc2D;
 /*! \brief Structure defining the 2D cellular automaton.
 */
 struct CALModel2D {

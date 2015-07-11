@@ -3,7 +3,7 @@
 
 #include <cal3D.h>
 #include <cal3DRun.h>
-#include <ElementaryProcessFunctor.h>
+#include <ElementaryProcessFunctor3D.h>
 
 
 #define ROWS 65

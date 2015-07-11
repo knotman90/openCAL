@@ -58,17 +58,15 @@ Various configurations of living cells show suprisingly complex and almost lifel
 }
 */
 
-class life3DTransitionFunction : public ElementaryProcessFunctor{
+class life3DTransitionFunction : public ElementaryProcessFunctor3D{
 
 public:
 	life3DTransitionFunction() {
 
 	};
 
-	 void run(struct CALModel2D* model, int i, int j){
 
-	 }
-  void run(struct CALModel3D* ca, int i, int j,int k){
+	void run(struct CALModel3D* ca, int i, int j,int k){
 		int sum = 0, n;
 		CALbyte alive = calGet3Db(ca,Q.life,i,j,k);
 		CALbyte nextState=alive;
@@ -88,7 +86,7 @@ public:
 //					life3D simulation functions
 //------------------------------------------------------------------------------
 CALbyte nextBool(double probability){
-    return rand() <  probability * ((double)RAND_MAX + 1.0);
+		return rand() <  probability * ((double)RAND_MAX + 1.0);
 }
 
 void life3DSimulationInit(struct CALModel3D* ca)
@@ -103,7 +101,7 @@ void life3DSimulationInit(struct CALModel3D* ca)
 		for(j=0;j<ca->columns;j++)
 			for(k=0;k<ca->slices;k++)
 				calSet3Db(ca, Q.life, i, j, k, nextBool(0.01));
-			
+
 }
 
 CALbyte life3DSimulationStopCondition(struct CALModel3D* life3D)
@@ -128,7 +126,7 @@ void life3DCADef()
 
 	//add substates
 	Q.life = calAddSubstate3Db(life3D);
-		
+
 	//simulation run setup
 	calRunAddInitFunc3D(life3Dsimulation, life3DSimulationInit); calRunInitSimulation3D(life3Dsimulation);
 	calRunAddStopConditionFunc3D(life3Dsimulation, life3DSimulationStopCondition);
@@ -139,7 +137,7 @@ void life3DCADef()
 //------------------------------------------------------------------------------
 
 void life3DExit()
-{	
+{
 	//finalizations
 	calRunFinalize3D(life3Dsimulation);
 	calFinalize3D(life3D);
